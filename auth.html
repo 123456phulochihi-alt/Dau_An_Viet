@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tài khoản | Di Sản Sài Gòn</title>
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#eee8dc;font:16px Arial;color:#51412d;padding:20px}.card{width:min(440px,100%);box-sizing:border-box;background:#fffdf8;border:1px solid #d8c9ad;border-radius:14px;padding:30px;box-shadow:0 12px 36px #34281718}h1{font-family:Georgia,serif}.tabs{display:flex;gap:8px;margin:22px 0}.tabs button,button[type=submit]{padding:11px 15px;border:1px solid #9b8158;border-radius:7px;cursor:pointer;background:white;color:#51412d}.tabs .active,button[type=submit]{background:#51412d;color:white}label{display:block;margin:14px 0 6px}input{width:100%;box-sizing:border-box;padding:12px;border:1px solid #cfc2ad;border-radius:7px}button[type=submit]{width:100%;margin-top:20px}#message{min-height:24px;color:#765b32;font-size:14px}.small{font-size:13px;color:#776b5a}a{color:#765b32}
+</style></head><body><main class="card"><h1>Di Sản Sài Gòn</h1><p>Đăng nhập để lưu hành trình khám phá di sản.</p>
+<div class="tabs"><button id="loginTab" class="active" type="button">Đăng nhập</button><button id="registerTab" type="button">Đăng ký</button></div>
+<form id="authForm"><div id="usernameWrap" hidden><label for="username">Tên tài khoản</label><input id="username" minlength="3" maxlength="24" autocomplete="username"></div>
+<label for="email">Email</label><input id="email" type="email" required autocomplete="email">
+<label for="password">Mật khẩu</label><input id="password" type="password" required minlength="8" autocomplete="current-password">
+<button id="submitButton" type="submit">Đăng nhập</button></form><p id="message" role="status"></p>
+<p class="small">Tài khoản quản trị cũng đăng nhập tại đây. Quyền Admin được cấp riêng, không thể tự chọn khi đăng ký.</p><p class="small"><a href="/">Quay lại bản đồ</a></p></main><script type="module" src="/src/auth.js"></script></body></html>

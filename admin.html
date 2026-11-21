@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f3efe5" />
+  <title>Quản trị | Dấu Ấn Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="adminApp">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Dấu Ấn Việt, về bản đồ">
+        <span class="brand-mark">DV</span>
+        <span>
+          <b>DẤU ẤN VIỆT</b>
+          <small>KHÔNG GIAN QUẢN TRỊ</small>
+        </span>
+      </a>
+      <nav class="admin-top-nav">
+        <a href="./">← Xem bản đồ</a>
+      </nav>
+    </header>
+
+    <main class="admin-shell">
+      <section id="loginPanel" class="login-card">
+        <p class="eyebrow">KHU VỰC DÀNH CHO QUẢN TRỊ VIÊN</p>
+        <h1>Đăng nhập<br><em>hệ thống.</em></h1>
+        <p class="muted">Đăng nhập bằng tài khoản quản trị đã được cấp quyền.</p>
+        <form id="loginForm">
+          <label>Email
+            <input name="email" type="email" required autocomplete="username" placeholder="admin@example.com">
+          </label>
+          <label>Mật khẩu
+            <input name="password" type="password" required autocomplete="current-password" placeholder="Nhập mật khẩu">
+          </label>
+          <button class="primary-button" type="submit">Đăng nhập <span>↗</span></button>
+          <p id="loginMessage" class="form-message" aria-live="polite"></p>
+        </form>
+        <p class="login-foot">Không có chức năng tự đăng ký. Tài khoản được tạo và cấp quyền bởi chủ dự án.</p>
+      </section>
+
+      <section id="dashboard" class="dashboard hidden">
+        <div class="dashboard-heading">
+          <div>
+            <p class="eyebrow">BẢNG ĐIỀU KHIỂN</p>
+            <h1>Quản lý <em>di sản.</em></h1>
+            <p class="muted">Quản lý hồ sơ di sản trên phạm vi toàn quốc.</p>
+          </div>
+          <button id="logoutButton" class="text-button" type="button">Đăng xuất ↗</button>
+        </div>
+
+        <div class="admin-grid">
+          <aside class="admin-sidebar">
+            <div class="admin-side-title">DANH MỤC</div>
+            <button id="showListButton" class="side-item active" type="button">
+              Danh sách di sản <span id="monumentCount">—</span>
+            </button>
+            <button id="showEditorButton" class="side-item" type="button">
+              Thêm di sản mới <span>＋</span>
+            </button>
+		<button id="showRegionsButton" class="side-item" type="button">
+  			Quản lý khu vực <span>⌖</span>
+		</button>
+            <div class="admin-side-note">
+  		<span>PHẠM VI QUẢN LÝ</span>
+ 		<b>Toàn quốc.</b>
+  		<small>Dữ liệu được phân vùng thông qua danh mục khu vực.</small>
+	    </div>
+          </aside>
+
+          <div class="admin-content">
+            <section id="listPanel" class="editor-card">
+              <div class="editor-heading">
+                <div>
+                  <p class="eyebrow">KHO DỮ LIỆU</p>
+                  <h2>Danh sách di sản</h2>
+                </div>
+              </div>
+
+              <div class="list-toolbar">
+                <label class="search-field">
+                  <span class="field-hint">Tìm kiếm</span>
+                  <input id="monumentSearch" type="search" placeholder="Nhập tên di sản...">
+                </label>
+                <label>
+                  <span class="field-hint">Khu vực</span>
+                  <select id="regionFilter">
+                    <option value="">Tất cả khu vực</option>
+                  </select>
+                </label>
+                <label>
+                  <span class="field-hint">Trạng thái</span>
+                  <select id="statusFilter">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="published">Đã xuất bản</option>
+                    <option value="draft">Bản nháp</option>
+                  </select>
+                </label>
+              </div>
+
+              <p id="listMessage" class="form-message" aria-live="polite"></p>
+              <div id="monumentList" class="monument-list">
+                <p class="muted">Danh sách di sản sẽ hiển thị tại đây.</p>
+              </div>
+            </section>
+
+            <section id="editorPanel" class="editor-card hidden">
+              <div class="editor-heading">
+                <div>
+                  <p class="eyebrow">HỒ SƠ DI SẢN</p>
+                  <h2 id="editorTitle">Thêm di sản mới</h2>
+                </div>
+                <button id="cancelEditorButton" class="text-button" type="button">← Quay lại danh sách</button>
+              </div>
+
+              <form id="monumentForm" class="editor-form">
+                <input name="id" type="hidden">
+
+                <label>Tên di sản
+                  <input name="name" required maxlength="200" placeholder="Ví dụ: Dinh Độc Lập">
+                </label>
+
+                <div class="form-row">
+                  <label>Khu vực
+                    <select name="region_id" id="regionSelect" required>
+                      <option value="">Chọn khu vực</option>
+                    </select>
+                  </label>
+                  <label>Địa chỉ
+                    <input name="address" placeholder="Địa chỉ cụ thể">
+                  </label>
+                </div>
+
+                <div class="form-row">
+                  <label>Thời gian xây dựng
+                    <input name="construction_period" placeholder="Ví dụ: 1962–1966">
+                  </label>
+                  <label>Cấp độ di sản
+                    <select name="heritage_level">
+                      <option value="">Chưa phân loại</option>
+                      <option value="3">3 · Di sản cấp địa phương</option>
+                      <option value="4">4 · Giá trị nổi bật</option>
+                      <option value="5">5 · Tầm quan trọng quốc gia</option>
+                      <option value="6">6 · UNESCO ghi danh/công nhận</option>
+                    </select>
+                  </label>
+                </div>
+
+                <div class="form-row">
+                  <label>Vĩ độ
+                    <input name="latitude" type="number" step="any" placeholder="Ví dụ: 10.7769">
+                  </label>
+                  <label>Kinh độ
+                    <input name="longitude" type="number" step="any" placeholder="Ví dụ: 106.6950">
+                  </label>
+                </div>
+
+                <label>Thông tin cơ bản
+                  <textarea name="basic_info" rows="3" placeholder="Thông tin ngắn gọn về di sản..."></textarea>
+                </label>
+
+                <label>Giới thiệu chi tiết
+                  <textarea name="introduction" rows="7" placeholder="Nhập nội dung giới thiệu về lịch sử, kiến trúc và giá trị của di sản..."></textarea>
+                </label>
+
+                <label>Tag phân loại
+                  <span class="field-hint">Phân cách các tag bằng dấu phẩy</span>
+                  <input name="tags" placeholder="Di tích lịch sử, Kiến trúc, Văn hóa">
+                </label>
+
+                <div class="form-row">
+                  <label>Trạng thái
+                    <select name="status" required>
+                      <option value="draft">Bản nháp</option>
+                      <option value="published">Xuất bản</option>
+                    </select>
+                  </label>
+                  <div class="slug-preview">
+                    <span class="field-hint">Đường dẫn (slug)</span>
+                    <p id="slugPreview">Sẽ được tạo tự động từ tên di sản</p>
+                  </div>
+                </div>
+
+                <div class="image-editor">
+                  <div>
+                    <b>Ảnh đại diện</b>
+                    <p class="muted">Ảnh chính hiển thị trên hồ sơ di sản.</p>
+                  </div>
+                  <img id="currentImage" alt="Ảnh đại diện hiện tại" hidden>
+                  <label class="upload-button">
+                    Tải ảnh lên
+                    <input id="imageUpload" type="file" accept="image/*" hidden>
+                  </label>
+                </div>
+
+                <p id="saveMessage" class="form-message" aria-live="polite"></p>
+                <div class="editor-actions">
+                  <button id="cancelFormButton" class="text-button" type="button">Hủy</button>
+                  <button class="primary-button" type="submit">Lưu di sản <span>↗</span></button>
+                </div>
+              </form>
+            </section>
+            <section id="regionsPanel" class="editor-card hidden">
+              <div class="editor-heading">
+                <div>
+                  <p class="eyebrow">DANH MỤC PHÂN VÙNG</p>
+                  <h2>Quản lý khu vực</h2>
+                </div>
+              </div>
+
+              <form id="regionForm" class="editor-form">
+                <input name="id" type="hidden">
+
+                <label>Tên khu vực
+                  <input name="name" required maxlength="150" placeholder="Ví dụ: Thành phố Hồ Chí Minh">
+                </label>
+
+                <label>Mã khu vực
+                  <input name="code" required maxlength="50" placeholder="Ví dụ: TPHCM">
+                </label>
+
+                <label>Mô tả
+                  <textarea name="description" rows="3" placeholder="Thông tin về khu vực..."></textarea>
+                </label>
+
+                <p id="regionMessage" class="form-message" aria-live="polite"></p>
+
+                <div class="editor-actions">
+                  <button id="cancelRegionButton" class="text-button" type="button">Hủy</button>
+                  <button class="primary-button" type="submit">Lưu khu vực <span>↗</span></button>
+                </div>
+              </form>
+
+              <div class="editor-heading">
+                <div>
+                  <p class="eyebrow">DỮ LIỆU HIỆN CÓ</p>
+                  <h2>Danh sách khu vực</h2>
+                </div>
+              </div>
+
+              <p id="regionsMessage" class="form-message" aria-live="polite"></p>
+              <div id="regionsList" class="monument-list">
+                <p class="muted">Danh sách khu vực sẽ hiển thị tại đây.</p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="/src/admin.js"></script>
+</body>
+</html>

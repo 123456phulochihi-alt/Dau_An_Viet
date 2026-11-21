@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f3efe5" />
+  <title>Dấu Ấn Việt | Bản đồ di sản Việt Nam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+    <header class="site-header">
+      <a class="brand" href="./"><span class="brand-mark">DS</span><span><b>DẤU ẤN VIỆT</b><small>HỒ SƠ DI SẢN THÀNH PHỐ</small></span></a>
+ <nav>
+  <a class="active" href="./">Bản đồ</a>
+  <a href="#about">Giới thiệu</a>
+  <a href="./auth.html" class="admin-link" id="accountLink">Đăng nhập</a>
+  <a href="./admin.html" class="admin-link">Quản trị ↗</a>
+</nav>
+    </header>
+    <main class="map-layout">
+      <section class="intro-panel">
+        <p class="eyebrow">HỒ SƠ DI SẢN · TP. HỒ CHÍ MINH</p>
+        <h1>Một thành phố,<br><em>ngàn lớp ký ức.</em></h1>
+        <p class="intro-copy">Khám phá những công trình, câu chuyện và dấu mốc đã góp phần tạo nên diện mạo thành phố.</p>
+        <div class="search-wrap"><span>⌕</span><input id="searchInput" placeholder="Tìm kiếm địa danh..." aria-label="Tìm kiếm địa danh"></div>
+        <div class="filter-heading"><span>CHỦ ĐỀ KHÁM PHÁ</span><span id="placeCount">01 ĐỊA DANH</span></div>
+<div id="tagFilters" class="tag-filters"></div>
+
+<div class="filter-heading">
+  <span>PHÂN HẠNG DI SẢN</span>
+</div>
+
+<div class="heritage-filter">
+  <select id="heritageFilter">
+    <option value="">Tất cả cấp độ</option>
+    <option value="3">🇻🇳 3 cờ</option>
+    <option value="4">🇻🇳 4 cờ</option>
+    <option value="5">🇻🇳 5 cờ</option>
+    <option value="6">🇻🇳 6 cờ · UNESCO</option>
+    <option value="unrated">UNRATED · Chưa phân hạng</option>
+  </select>
+</div>
+
+<div id="placeList" class="place-list"></div>
+        <div class="panel-note"><span class="note-dot"></span> Dữ liệu đang trong giai đoạn xây dựng.</div>
+      </section>
+      <section class="map-section">
+        <div class="map-topline"><span>THÀNH PHỐ HỒ CHÍ MINH</span><span class="map-coordinates">10°46′ N · 106°41′ E</span></div>
+        <div id="map" aria-label="Bản đồ tương tác Thành phố Hồ Chí Minh"></div>
+        <div class="map-legend"><span class="legend-pin"></span> Địa danh di sản <span class="legend-separator">·</span> Chọn điểm đánh dấu để xem hồ sơ</div>
+        <div class="map-stamp">SAIGON<br><small>HERITAGE ATLAS</small></div>
+      </section>
+    </main>
+    <footer id="about"><span>DẤU ẤN VIỆT</span><span>Một dự án khám phá và lưu giữ ký ức đô thị.</span><span>PHIÊN BẢN 01 / 2026</span></footer>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

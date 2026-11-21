@@ -1,0 +1,2 @@
+import { supabase } from "./supabase.js";
+export async function requireAdmin(){const {data,error}=await supabase.auth.getUser();if(error||!data.user){location.href="/auth.html";return null;}const {data:profile,error:profileError}=await supabase.from("profiles").select("role,username").eq("id",data.user.id).single();if(profileError||profile?.role!=="admin"){location.href="/";return null;}return {user:data.user,profile};}

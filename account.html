@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f3efe5">
+  <title>Tài khoản | Dấu Ấn Việt</title>
+  <link rel="stylesheet" href="/src/account.css">
+</head>
+<body>
+  <div id="accountApp">
+    <header class="account-header">
+      <a href="./" class="account-brand">
+        <span class="brand-mark">DV</span>
+        <span>
+          <b>DẤU ẤN VIỆT</b>
+          <small>HỒ SƠ DI SẢN VIỆT NAM</small>
+        </span>
+      </a>
+
+      <nav>
+        <a href="./">Bản đồ</a>
+        <a href="./account.html" class="active">Tài khoản</a>
+        <button id="logoutButton" type="button">Đăng xuất</button>
+      </nav>
+    </header>
+
+    <main class="account-main">
+      <section class="account-welcome">
+        <p class="eyebrow">KHÔNG GIAN CÁ NHÂN</p>
+        <h1 id="welcomeName">Xin chào!</h1>
+        <p>Tiếp tục hành trình khám phá những dấu ấn của thành phố.</p>
+      </section>
+
+      <section id="profileSection">
+        <h2>Thông tin tài khoản</h2>
+        <div id="profileInfo"></div>
+      </section>
+
+      <section id="historySection">
+        <h2>Lịch sử tìm kiếm</h2>
+        <div id="searchHistory"></div>
+      </section>
+
+      <section id="viewedSection">
+        <h2>Di tích đã xem gần đây</h2>
+        <div id="recentlyViewed"></div>
+      </section>
+
+      <section id="suggestionSection">
+        <h2>Có thể bạn cũng quan tâm</h2>
+        <div id="suggestions"></div>
+      </section>
+
+      <section id="settingsSection">
+        <h2>Cài đặt tài khoản</h2>
+        <div id="accountSettings"></div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="/src/profile.js"></script>
+</body>
+</html>

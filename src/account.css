@@ -1,0 +1,276 @@
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Arial, Tahoma, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f3efe5;
+  color: #51412d;
+  font-family: Arial, Tahoma, sans-serif;
+  line-height: 1.6;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.account-header {
+  min-height: 76px;
+  padding: 14px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: #fffdf8;
+  border-bottom: 1px solid #ded4c2;
+}
+
+.account-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: #51412d;
+  color: #fffdf8;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: bold;
+}
+
+.account-brand b,
+.account-brand small {
+  display: block;
+}
+
+.account-brand b {
+  font-family: Arial, Tahoma, sans-serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+.account-brand small {
+  margin-top: 4px;
+  color: #88785f;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.account-header nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.account-header nav a,
+.account-header nav button {
+  color: #62533e;
+  font-family: Arial, Tahoma, sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.account-header nav a.active {
+  color: #9a7440;
+  font-weight: 700;
+}
+
+.account-header nav button {
+  padding: 9px 13px;
+  border: 1px solid #bba783;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.account-main {
+  width: min(1000px, 90%);
+  margin: 42px auto 80px;
+}
+
+.account-welcome {
+  padding: 34px;
+  margin-bottom: 28px;
+  background: #e8dfcf;
+  border: 1px solid #d8c9ad;
+  border-radius: 12px;
+}
+
+.eyebrow {
+  color: #92764d;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+.account-welcome h1 {
+  margin: 12px 0;
+  font-family: Arial, Tahoma, sans-serif;
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 700;
+}
+
+.account-welcome p:last-child {
+  margin-bottom: 0;
+  color: #776b5a;
+}
+
+.account-main section:not(.account-welcome) {
+  padding: 26px;
+  margin-bottom: 20px;
+  background: #fffdf8;
+  border: 1px solid #ded4c2;
+  border-radius: 10px;
+}
+
+.account-main h2 {
+  margin: 0 0 20px;
+  font-family: Arial, Tahoma, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.profile-row,
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 14px 0;
+  border-bottom: 1px solid #eee7db;
+}
+
+.profile-row:last-child,
+.history-item:last-child {
+  border-bottom: 0;
+}
+
+.profile-row span,
+.history-item small {
+  color: #887b68;
+}
+
+.profile-row strong {
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.history-item small {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+.search-again {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border: 1px solid #bba783;
+  border-radius: 6px;
+  background: #fffdf8;
+  color: #62533e;
+  cursor: pointer;
+}
+
+#recentlyViewed,
+#suggestions,
+#accountSettings {
+  color: #887b68;
+}
+
+button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+@media (max-width: 640px) {
+  .account-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .account-header nav {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .account-main {
+    width: 92%;
+    margin-top: 24px;
+  }
+
+  .account-welcome,
+  .account-main section:not(.account-welcome) {
+    padding: 20px;
+  }
+
+  .profile-row,
+  .history-item {
+    align-items: flex-start;
+  }
+}
+
+.password-form {
+  max-width: 500px;
+}
+
+.password-form h3 {
+  margin: 0 0 20px;
+  font-size: 18px;
+}
+
+.password-form label {
+  display: block;
+  margin: 14px 0 6px;
+  color: #776b5a;
+  font-size: 14px;
+}
+
+.password-form input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ded4c2;
+  border-radius: 6px;
+  background: #fffdf8;
+  color: #51412d;
+  font-family: Arial, Tahoma, sans-serif;
+  font-size: 14px;
+}
+
+.password-form input:focus {
+  outline: 2px solid #bba783;
+  border-color: #bba783;
+}
+
+.password-form button {
+  margin-top: 20px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 6px;
+  background: #51412d;
+  color: #fffdf8;
+  font-family: Arial, Tahoma, sans-serif;
+  cursor: pointer;
+}
+
+#passwordMessage {
+  margin-top: 12px;
+  font-size: 13px;
+  color: #80643c;
+  overflow-wrap: anywhere;
+}
