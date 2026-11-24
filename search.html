@@ -1,0 +1,91 @@
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f3efe5" />
+  <title>Tìm kiếm | Dấu Ấn Việt</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div id="searchApp">
+    <header class="site-header">
+      <a class="brand" href="./">
+        <span class="brand-mark">DS</span>
+        <span>
+          <b>DẤU ẤN VIỆT</b>
+          <small>HỒ SƠ DI SẢN THÀNH PHỐ</small>
+        </span>
+      </a>
+
+      <nav>
+        <a href="./">Bản đồ</a>
+        <a class="active" href="./search.html">Tìm kiếm</a>
+        <a href="./auth.html" class="admin-link" id="accountLink">Đăng nhập</a>
+        <a href="./edu.html" class="admin-link" id="eduLink" hidden>Không gian EDU</a>
+        <a href="./admin.html" class="admin-link">Quản trị ↗</a>
+      </nav>
+    </header>
+
+    <main class="search-page-shell">
+      <div class="search-page-heading">
+        <p class="eyebrow">DẤU ẤN VIỆT · TRA CỨU DI SẢN</p>
+        <h1>Tìm lại những <em>dấu ấn.</em></h1>
+        <p>Khám phá công trình, câu chuyện và những dấu mốc của thành phố.</p>
+      </div>
+
+      <section class="search-workspace">
+        <div class="search-page-toolbar">
+          <label class="search-page-input">
+            <span>⌕</span>
+            <input
+              id="searchInput"
+              type="search"
+              placeholder="Nhập tên di tích, địa danh hoặc chủ đề..."
+              aria-label="Tìm kiếm di sản"
+            >
+          </label>
+
+          <select id="heritageFilter" aria-label="Lọc theo phân hạng">
+            <option value="">Tất cả cấp độ</option>
+            <option value="3">🇻🇳 3 cờ</option>
+            <option value="4">🇻🇳 4 cờ</option>
+            <option value="5">🇻🇳 5 cờ</option>
+            <option value="6">🇻🇳 6 cờ · UNESCO</option>
+            <option value="unrated">UNRATED · Chưa phân hạng</option>
+          </select>
+        </div>
+
+       <div class="search-filter-row">
+  <div class="search-tag-panel">
+    <div class="search-tag-heading">
+      <div>
+        <div class="search-section-label">CHỦ ĐỀ KHÁM PHÁ</div>
+        <span id="tagCount" class="search-tag-count">ĐANG TẢI...</span>
+      </div>
+
+      <button type="button" id="toggleTags"
+        class="search-tag-toggle" aria-expanded="true">
+        Thu gọn <span>⌃</span>
+      </button>
+    </div>
+
+    <div id="tagFilters" class="search-tag-list"></div>
+  </div>
+
+  <p id="placeCount" class="search-count">ĐANG TẢI...</p>
+</div>
+
+        <section id="placeList" class="search-results" aria-live="polite"></section>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="/src/search.js"></script>
+</body>
+</html>

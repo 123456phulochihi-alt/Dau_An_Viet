@@ -61,9 +61,21 @@
             <button id="showEditorButton" class="side-item" type="button">
               Thêm di sản mới <span>＋</span>
             </button>
+		<button id="showMembersButton" class="side-item" type="button">
+  		Quản lý thành viên <span id="memberCount">—</span>
+		</button>
 		<button id="showRegionsButton" class="side-item" type="button">
   			Quản lý khu vực <span>⌖</span>
 		</button>
+<button id="showTagsButton" class="side-item" type="button">
+    Quản lý Tag <span>◇</span>
+</button>
+<button id="showQuizButton" class="side-item" type="button">
+    Quản lý Quiz <span>✎</span>
+</button>
+<button id="showAppearanceButton" class="side-item" type="button">
+  Giao diện website <span>◈</span>
+</button>
             <div class="admin-side-note">
   		<span>PHẠM VI QUẢN LÝ</span>
  		<b>Toàn quốc.</b>
@@ -246,6 +258,189 @@
                 <p class="muted">Danh sách khu vực sẽ hiển thị tại đây.</p>
               </div>
             </section>
+            <section id="membersPanel" class="editor-card hidden">
+              <div class="editor-heading">
+                <div>
+                  <p class="eyebrow">MEMBERSHIP MANAGEMENT</p>
+                  <h2>Quản lý thành viên</h2>
+                </div>
+              </div>
+
+              <div class="list-toolbar">
+                <label class="search-field">
+                  <span class="field-hint">Tìm kiếm tài khoản</span>
+                  <input id="memberSearch" type="search" placeholder="Tên người dùng...">
+                </label>
+                <label>
+                  <span class="field-hint">Loại thành viên</span>
+                  <select id="memberFilter">
+                    <option value="">Tất cả</option>
+                    <option value="free">FREE</option>
+                    <option value="plus">PLUS</option>
+                    <option value="edu">EDU</option>
+                  </select>
+                </label>
+              </div>
+
+              <p id="memberMessage" class="form-message" aria-live="polite"></p>
+
+              <div id="memberList" class="monument-list">
+                <p class="muted">Danh sách thành viên sẽ hiển thị tại đây.</p>
+              </div>
+	    </section>
+
+<section id="tagsPanel" class="editor-card hidden">
+    <div class="editor-heading">
+        <div>
+            <p class="eyebrow">DANH MỤC PHÂN LOẠI</p>
+            <h2>Quản lý Tag</h2>
+            <p class="muted">Tạo và quản lý các nhãn phân loại dùng chung cho di sản.</p>
+        </div>
+    </div>
+
+    <form id="tagForm" class="editor-form">
+        <label>Tên Tag
+            <input name="name" required maxlength="100" placeholder="Ví dụ: Kiến trúc, Lịch sử, Văn hóa">
+        </label>
+
+        <p id="tagMessage" class="form-message" aria-live="polite"></p>
+
+        <div class="editor-actions">
+            <button class="primary-button" type="submit">Thêm Tag <span>＋</span></button>
+        </div>
+    </form>
+
+    <div class="editor-heading">
+        <div>
+            <p class="eyebrow">KHO PHÂN LOẠI</p>
+            <h2>Danh sách Tag</h2>
+        </div>
+        <span id="tagCount" class="muted">—</span>
+    </div>
+
+    <p id="tagsMessage" class="form-message" aria-live="polite"></p>
+
+    <div id="tagsList" class="monument-list">
+        <p class="muted">Danh sách Tag sẽ hiển thị tại đây.</p>
+    </div>
+</section>
+
+<section id="quizPanel" class="editor-card hidden">
+    <div class="editor-heading">
+        <div>
+            <p class="eyebrow">QUIZ MANAGEMENT</p>
+            <h2>Quản lý Quiz</h2>
+            <p class="muted">Quản lý câu hỏi và đáp án cho từng di tích.</p>
+        </div>
+    </div>
+
+    <form id="quizQuestionForm" class="editor-form">
+        <input name="id" type="hidden">
+
+        <label>Di tích
+            <select name="monument_id" id="quizMonumentSelect" required>
+                <option value="">Chọn di tích</option>
+            </select>
+        </label>
+
+        <label>Mini game
+            <select name="game_id" id="quizGameSelect" required>
+                <option value="">Chọn mini game</option>
+            </select>
+        </label>
+
+        <label>Nội dung câu hỏi
+            <textarea name="question" rows="3" required
+                placeholder="Nhập nội dung câu hỏi..."></textarea>
+        </label>
+
+        <div id="quizOptionsContainer">
+            <p class="field-hint">Các phương án trả lời</p>
+        </div>
+
+        <label>Giải thích đáp án
+            <textarea name="explanation" rows="3"
+                placeholder="Giải thích vì sao đáp án đúng..."></textarea>
+        </label>
+
+        <label>
+            <input name="is_active" type="checkbox" checked>
+            Hiển thị câu hỏi
+        </label>
+
+        <p id="quizMessage" class="form-message" aria-live="polite"></p>
+
+        <div class="editor-actions">
+            <button id="cancelQuizButton" class="text-button" type="button">Hủy</button>
+            <button class="primary-button" type="submit">
+                Lưu câu hỏi <span>↗</span>
+            </button>
+        </div>
+    </form>
+
+    <div class="editor-heading">
+        <div>
+            <p class="eyebrow">QUESTION BANK</p>
+            <h2>Danh sách câu hỏi</h2>
+        </div>
+    </div>
+
+    <p id="quizListMessage" class="form-message" aria-live="polite"></p>
+
+    <div id="quizQuestionList" class="monument-list">
+        <p class="muted">Chọn di tích và mini game để xem câu hỏi.</p>
+    </div>
+</section>
+<section id="appearancePanel" class="editor-card hidden">
+    <div class="editor-heading">
+        <div>
+            <p class="eyebrow">WEBSITE CUSTOMIZATION</p>
+            <h2>Giao diện website</h2>
+            <p class="muted">Quản lý logo và hình nền cho website.</p>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h3>Logo website</h3>
+        <div id="logoPreview" class="appearance-preview">Chưa có logo</div>
+
+        <label>Tải logo mới
+            <input id="logoFile" type="file" accept="image/*">
+        </label>
+
+        <button id="saveLogoButton" class="primary-button" type="button">
+            Lưu logo
+        </button>
+    </div>
+
+    <div class="form-section">
+        <h3>Hình nền từng khu vực</h3>
+
+        <label>Khu vực
+            <select id="backgroundPage">
+                <option value="home">Trang chủ</option>
+                <option value="admin">Trang quản trị</option>
+                <option value="edu">Trang EDU</option>
+                <option value="ai">Trang AI</option>
+                <option value="quiz">Trang Quiz</option>
+                <option value="detail">Trang chi tiết di sản</option>
+            </select>
+        </label>
+
+        <div id="backgroundPreview" class="appearance-preview">
+            Chưa có hình nền
+        </div>
+
+        <label>Tải hình nền mới
+            <input id="backgroundFile" type="file" accept="image/*">
+        </label>
+
+        <button id="saveBackgroundButton" class="primary-button" type="button">
+            Lưu hình nền
+        </button>
+    </div>
+</section>
+
           </div>
         </div>
       </section>

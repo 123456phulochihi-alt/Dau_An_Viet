@@ -274,3 +274,26 @@ button:disabled {
   color: #80643c;
   overflow-wrap: anywhere;
 }
+.membership-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.membership-free {
+  background: #eee9df;
+  color: #756b5b;
+}
+
+.membership-plus {
+  background: #e9dfcc;
+  color: #89652e;
+}
+
+.membership-edu {
+  background: #e0e8dc;
+  color: #496b4b;
+}

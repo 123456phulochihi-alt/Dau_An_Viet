@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Khám phá các sự kiện lịch sử qua dòng thời gian Dấu Ấn Việt.">
+    <title>Chi tiết sự kiện | Dấu Ấn Việt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./src/timeline.css">
+    <link rel="stylesheet" href="./src/event-detail.css">
+</head>
+
+<body>
+    <header class="event-detail-header">
+        <a href="./timeline.html" class="event-detail-back">
+            ← Quay lại dòng thời gian
+        </a>
+
+        <span class="event-detail-brand">DẤU ẤN VIỆT</span>
+    </header>
+
+    <main class="event-detail-page">
+
+        <section class="event-detail-hero" id="eventDetailHero">
+            <div class="event-detail-hero-content">
+                <p class="eyebrow">DÒNG THỜI GIAN LỊCH SỬ</p>
+
+                <p id="mainEventDate" class="event-detail-date"></p>
+
+                <h1 id="mainEventTitle">Đang tải sự kiện...</h1>
+
+                <p id="mainEventSummary"></p>
+            </div>
+
+            <div id="mainEventImageContainer" class="event-detail-cover">
+                <img id="mainEventImage" alt="" hidden>
+            </div>
+        </section>
+
+        <section class="event-detail-introduction">
+            <div class="event-detail-section-heading">
+                <p class="eyebrow">TỔNG QUAN</p>
+                <h2>Giới thiệu sự kiện</h2>
+            </div>
+
+            <div id="mainEventContent" class="event-detail-content">
+                Đang tải nội dung...
+            </div>
+
+            <div id="mainRelatedMonuments"></div>
+        </section>
+
+        <section class="child-events-section">
+            <div class="event-detail-section-heading">
+                <p class="eyebrow">NHỮNG DẤU MỐC QUAN TRỌNG</p>
+                <h2>Dòng thời gian sự kiện</h2>
+                <p>
+                    Khám phá những sự kiện tiêu biểu diễn ra trong giai đoạn này.
+                </p>
+            </div>
+
+            <div id="childEventsTimeline" class="child-events-timeline">
+                <p>Đang tải các sự kiện con...</p>
+            </div>
+        </section>
+
+        <section id="childEventDetailSection" class="child-event-detail-section" hidden>
+            <div class="event-detail-section-heading">
+                <p class="eyebrow">TÌM HIỂU CHI TIẾT</p>
+                <h2>Nội dung sự kiện</h2>
+            </div>
+
+            <div id="childEventDetailList"></div>
+        </section>
+
+        <div id="eventDetailMessage" class="event-detail-message"></div>
+
+    </main>
+
+    <footer class="event-detail-footer">
+        <p>DẤU ẤN VIỆT</p>
+        <span>Lưu giữ dấu ấn lịch sử và di sản Việt Nam.</span>
+    </footer>
+
+    <script type="module" src="./src/event-detail.js"></script>
+</body>
+</html>

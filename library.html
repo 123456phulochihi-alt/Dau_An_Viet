@@ -1,0 +1,183 @@
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f2e9">
+  <title>Thư viện học liệu | Dấu Ấn Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/src/library.css">
+</head>
+<body>
+  <header class="library-header">
+    <a href="./edu.html" class="back-link">← Không gian EDU</a>
+    <div class="header-right">
+      <span id="libraryRoleBadge" class="edu-badge">EDU MEMBER</span>
+      <a href="./account.html">Tài khoản</a>
+    </div>
+  </header>
+
+  <main class="library-main">
+    <section class="library-hero">
+      <p class="eyebrow">KHÔNG GIAN HỌC TẬP</p>
+      <h1>Thư viện học liệu</h1>
+      <p>
+        Khám phá kiến thức về lịch sử, địa lý và công nghệ
+        số hóa di tích lịch sử Việt Nam.
+      </p>
+    </section>
+
+    <section class="library-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">EXPLORE & LEARN</p>
+          <h2>Các chuyên đề</h2>
+        </div>
+        <button id="addTopicButton" class="primary-button" hidden>
+          + Thêm chuyên đề
+        </button>
+      </div>
+
+<p id="libraryMessage" class="message"></p>
+
+<div class="library-search">
+  <span>⌕</span>
+  <input
+    type="search"
+    id="librarySearch"
+    placeholder="Tìm chuyên đề hoặc bài học..."
+    autocomplete="off"
+  >
+</div>
+
+<div id="topicList" class="topic-grid"></div>
+    </section>
+
+    <section id="lessonSection" class="lesson-section" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">LESSON LIBRARY</p>
+          <h2 id="selectedTopicTitle">Bài học</h2>
+          <p id="selectedTopicDescription"></p>
+        </div>
+        <button id="addLessonButton" class="primary-button" hidden>
+          + Thêm bài học
+        </button>
+      </div>
+
+      <div id="lessonList" class="lesson-list"></div>
+    </section>
+
+<section id="lessonDetail" class="lesson-detail" hidden>
+  <button id="backToLessons" class="back-link">
+    ← Quay lại danh sách bài học
+  </button>
+
+  <div class="lesson-breadcrumb">
+    <span>Thư viện học liệu</span>
+    <span>›</span>
+    <span id="detailTopicTitle"></span>
+  </div>
+
+  <p class="eyebrow">NỘI DUNG BÀI HỌC</p>
+
+  <h2 id="detailLessonTitle"></h2>
+  <p id="detailLessonSummary"></p>
+
+<article id="detailLessonContent" class="lesson-content"></article>
+
+<div class="lesson-progress">
+  <button id="completeLessonButton" class="complete-lesson-button">
+    ✓ Đánh dấu đã hoàn thành
+  </button>
+  <p id="lessonProgressMessage"></p>
+</div>
+
+<a id="detailResourceLink" class="resource-link" hidden
+     target="_blank" rel="noopener noreferrer">
+    Mở tài liệu tham khảo ↗
+  </a>
+</section>
+
+    <section id="topicEditor" class="editor-overlay" hidden>
+      <div class="editor-modal">
+        <div class="editor-heading">
+          <div>
+            <p class="eyebrow">TOPIC MANAGEMENT</p>
+            <h2 id="topicEditorTitle">Thêm chuyên đề</h2>
+          </div>
+          <button type="button" class="close-editor" data-close="topicEditor">×</button>
+        </div>
+
+        <form id="topicForm">
+          <label for="topicTitleInput">Tên chuyên đề</label>
+          <input id="topicTitleInput" type="text" required maxlength="200">
+
+          <label for="topicDescriptionInput">Mô tả</label>
+          <textarea id="topicDescriptionInput" rows="4"></textarea>
+
+          <label for="topicCoverInput">Ảnh bìa</label>
+          <input id="topicCoverInput" type="file" accept="image/*">
+          <div id="topicCoverPreview" class="cover-preview"></div>
+
+          <div class="editor-buttons">
+            <button type="button" class="secondary-button" data-close="topicEditor">Hủy</button>
+            <button type="submit" class="primary-button">Lưu chuyên đề</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="lessonEditor" class="editor-overlay" hidden>
+      <div class="editor-modal lesson-editor-modal">
+        <div class="editor-heading">
+          <div>
+            <p class="eyebrow">LESSON MANAGEMENT</p>
+            <h2 id="lessonEditorTitle">Thêm bài học</h2>
+          </div>
+          <button type="button" class="close-editor" data-close="lessonEditor">×</button>
+        </div>
+
+        <form id="lessonForm">
+          <label for="lessonTopicInput">Chuyên đề</label>
+          <select id="lessonTopicInput" required></select>
+
+          <label for="lessonTitleInput">Tên bài học</label>
+          <input id="lessonTitleInput" type="text" required maxlength="200">
+
+          <label for="lessonSummaryInput">Tóm tắt</label>
+          <textarea id="lessonSummaryInput" rows="3"></textarea>
+
+          <label>Nội dung bài học</label>
+          <div class="editor-toolbar">
+            <button type="button" data-command="bold"><b>B</b></button>
+            <button type="button" data-command="italic"><i>I</i></button>
+            <button type="button" data-command="underline"><u>U</u></button>
+            <button type="button" data-command="formatBlock" data-value="h2">Tiêu đề</button>
+            <button type="button" data-command="formatBlock" data-value="h3">Tiêu đề nhỏ</button>
+            <button type="button" data-command="insertUnorderedList">• Danh sách</button>
+            <button type="button" id="insertLessonImage">+ Ảnh</button>
+          </div>
+
+          <div id="lessonContentEditor" class="rich-editor" contenteditable="true"></div>
+          <input id="lessonImageInput" type="file" accept="image/*" hidden>
+
+          <label for="lessonResourceInput">Đường dẫn tài liệu tham khảo</label>
+          <input id="lessonResourceInput" type="url" placeholder="https://...">
+
+          <div class="editor-buttons">
+            <button type="button" class="secondary-button" data-close="lessonEditor">Hủy</button>
+            <button type="submit" class="primary-button">Lưu bài học</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/src/library.js"></script>
+</body>
+</html>
+

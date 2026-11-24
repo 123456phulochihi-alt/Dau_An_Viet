@@ -50,7 +50,7 @@ async function loadProfile() {
 
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
-    .select('username, display_name, role, created_at')
+    .select('username, display_name, role, membership_type, created_at')
     .eq('id', user.id)
     .single();
 
@@ -63,20 +63,46 @@ async function loadProfile() {
   const username = profile.username || profile.display_name || user.email || 'bạn';
   welcomeName.textContent = `Xin chào, ${username}!`;
 
-  profileInfo.innerHTML = `
-    <div class="profile-row">
-      <span>Tên tài khoản</span>
-      <strong>${escapeHtml(profile.username || 'Chưa cập nhật')}</strong>
-    </div>
-    <div class="profile-row">
-      <span>Email</span>
-      <strong>${escapeHtml(user.email || 'Không có email')}</strong>
-    </div>
-    <div class="profile-row">
-      <span>Ngày tham gia</span>
-      <strong>${escapeHtml(formatDate(profile.created_at || user.created_at))}</strong>
-    </div>
-  `;
+  const membershipType = ['free', 'plus', 'edu'].includes(profile.membership_type)
+  ? profile.membership_type
+  : 'free';
+
+const membershipNames = {
+  free: 'FREE',
+  plus: 'PLUS',
+  edu: 'EDU'
+};
+
+const membershipDescriptions = {
+  free: 'Tài khoản khám phá cơ bản',
+  plus: 'Thành viên khám phá nâng cao',
+  edu: 'Thành viên giáo dục'
+};
+
+profileInfo.innerHTML = `
+  <div class="profile-row">
+    <span>Tên tài khoản</span>
+    <strong>${escapeHtml(profile.username || 'Chưa cập nhật')}</strong>
+  </div>
+  <div class="profile-row">
+    <span>Email</span>
+    <strong>${escapeHtml(user.email || 'Không có email')}</strong>
+  </div>
+  <div class="profile-row">
+    <span>Ngày tham gia</span>
+    <strong>${escapeHtml(formatDate(profile.created_at || user.created_at))}</strong>
+  </div>
+  <div class="profile-row">
+    <span>Gói thành viên</span>
+    <strong class="membership-badge membership-${membershipType}">
+      ${membershipNames[membershipType]}
+    </strong>
+  </div>
+  <div class="profile-row">
+    <span>Quyền lợi</span>
+    <strong>${membershipDescriptions[membershipType]}</strong>
+  </div>
+`;
 
   await loadSearchHistory(user.id);
   await loadRecentlyViewed(user.id);

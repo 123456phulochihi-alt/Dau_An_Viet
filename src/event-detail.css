@@ -1,0 +1,488 @@
+
+:root {
+    --detail-green: #40543f;
+    --detail-green-light: #68795b;
+    --detail-gold: #a88a58;
+    --detail-cream: #f8f6ef;
+    --detail-paper: #fffefa;
+    --detail-text: #3f453b;
+    --detail-muted: #858173;
+    --detail-border: #e7e1d4;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "Be Vietnam Pro", Arial, sans-serif;
+}
+
+body {
+    font-family: "Be Vietnam Pro", Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: var(--detail-cream);
+    color: var(--detail-text);
+    font-family: "Be Vietnam Pro", Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+}
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+/* HEADER */
+
+.event-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 7%;
+    background: var(--detail-paper);
+    border-bottom: 1px solid var(--detail-border);
+}
+
+.event-detail-back {
+    color: var(--detail-green);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.event-detail-back:hover {
+    color: var(--detail-gold);
+}
+
+.event-detail-brand {
+    color: var(--detail-green);
+    font-family: "Lora", Georgia, serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* MAIN PAGE */
+
+.event-detail-page {
+    width: min(1120px, 86%);
+    margin: 0 auto;
+    padding: 55px 0 90px;
+}
+
+/* HERO */
+
+.event-detail-hero {
+    display: grid;
+    grid-template-columns: 1fr 0.9fr;
+    align-items: center;
+    gap: 55px;
+    padding-bottom: 65px;
+    border-bottom: 1px solid var(--detail-border);
+}
+
+.eyebrow {
+    color: var(--detail-gold);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.event-detail-date {
+    margin: 28px 0 12px;
+    color: var(--detail-green-light);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.event-detail-hero h1 {
+    margin: 0 0 20px;
+    color: var(--detail-green);
+    font-family: "Lora", Georgia, serif;
+    font-size: clamp(34px, 5vw, 55px);
+    line-height: 1.2;
+}
+
+#mainEventSummary {
+    color: var(--detail-muted);
+    font-size: 16px;
+    line-height: 1.9;
+}
+
+.event-detail-cover {
+    overflow: hidden;
+    min-height: 320px;
+    background: #e8e5d9;
+    border-radius: 5px;
+}
+
+.event-detail-cover img {
+    display: block;
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+}
+
+.event-detail-cover img[hidden] {
+    display: none;
+}
+
+/* SECTION HEADING */
+
+.event-detail-introduction,
+.child-events-section {
+    padding: 65px 0;
+    border-bottom: 1px solid var(--detail-border);
+}
+
+.event-detail-section-heading {
+    margin-bottom: 30px;
+}
+
+.event-detail-section-heading h2 {
+    margin: 10px 0;
+    color: var(--detail-green);
+    font-family: "Lora", Georgia, serif;
+    font-size: 30px;
+}
+
+.event-detail-section-heading > p:last-child {
+    color: var(--detail-muted);
+    line-height: 1.7;
+}
+
+/* CONTENT */
+
+.event-detail-content {
+    color: #55584e;
+    font-size: 16px;
+    line-height: 2;
+    white-space: pre-line;
+}
+
+/* CHILD TIMELINE */
+
+.child-events-timeline {
+    position: relative;
+    margin-top: 45px;
+    padding-left: 38px;
+}
+
+.child-events-timeline::before {
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 8px;
+    width: 2px;
+    background: #d9ddcd;
+    content: "";
+}
+
+.child-timeline-item {
+    position: relative;
+    margin-bottom: 35px;
+}
+
+.child-timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+.child-timeline-marker {
+    position: absolute;
+    top: 8px;
+    left: -38px;
+    width: 14px;
+    height: 14px;
+    background: var(--detail-green-light);
+    border: 4px solid var(--detail-cream);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #c8cfba;
+}
+
+.child-timeline-card {
+    padding: 24px 26px;
+    background: var(--detail-paper);
+    border: 1px solid var(--detail-border);
+    border-radius: 12px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.child-timeline-card:hover {
+    border-color: #b6bd9f;
+    transform: translateY(-2px);
+}
+
+.child-timeline-year {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: var(--detail-gold);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.child-timeline-card h3 {
+    margin: 0 0 10px;
+    color: var(--detail-green);
+    font-family: "Lora", Georgia, serif;
+    font-size: 22px;
+}
+
+.child-timeline-card p {
+    margin: 0;
+    color: var(--detail-muted);
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.child-timeline-card button {
+    margin-top: 16px;
+    padding: 0;
+    color: var(--detail-green-light);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.child-timeline-card button:hover {
+    color: var(--detail-gold);
+}
+
+/* CHILD EVENT DETAILS */
+
+.child-event-detail-section {
+    padding: 65px 0;
+}
+
+.child-event-detail-card {
+    margin-bottom: 30px;
+    padding: 28px;
+    background: var(--detail-paper);
+    border: 1px solid var(--detail-border);
+    border-radius: 12px;
+}
+
+.child-event-detail-card h3 {
+    color: var(--detail-green);
+    font-family: "Lora", Georgia, serif;
+    font-size: 24px;
+}
+
+.child-event-detail-card img {
+    display: block;
+    width: 100%;
+    max-height: 420px;
+    margin: 20px 0;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.child-event-detail-card p {
+    color: #55584e;
+    font-size: 15px;
+    line-height: 2;
+    white-space: pre-line;
+}
+
+/* MESSAGE */
+
+.event-detail-message {
+    margin-top: 30px;
+    color: var(--detail-muted);
+    text-align: center;
+    font-size: 14px;
+}
+
+/* FOOTER */
+
+.event-detail-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 35px 20px;
+    color: #eae9df;
+    background: var(--detail-green);
+    text-align: center;
+}
+
+.event-detail-footer p {
+    margin: 0;
+    font-family: "Lora", Georgia, serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.event-detail-footer span {
+    color: #d0d3c4;
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+    .event-detail-header {
+        padding: 18px 6%;
+    }
+
+    .event-detail-page {
+        width: 88%;
+        padding-top: 35px;
+    }
+
+    .event-detail-hero {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding-bottom: 40px;
+    }
+
+    .event-detail-cover {
+        min-height: 220px;
+    }
+
+    .event-detail-cover img {
+        height: 260px;
+    }
+
+    .event-detail-introduction,
+    .child-events-section,
+    .child-event-detail-section {
+        padding: 45px 0;
+    }
+
+    .event-detail-section-heading h2 {
+        font-size: 26px;
+    }
+
+    .child-timeline-card {
+        padding: 20px;
+    }
+
+    .child-timeline-card h3 {
+        font-size: 19px;
+    }
+
+    .child-event-detail-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 420px) {
+    .event-detail-brand {
+        font-size: 13px;
+    }
+
+    .event-detail-back {
+        font-size: 12px;
+    }
+
+    .event-detail-hero h1 {
+        font-size: 32px;
+    }
+
+    .child-events-timeline {
+        padding-left: 30px;
+    }
+
+    .child-timeline-marker {
+        left: -30px;
+    }
+
+    .child-events-timeline::before {
+        left: 6px;
+    }
+}
+
+/* Di tích liên quan */
+.related-monuments-section {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid #e5e1d5;
+}
+
+.related-monuments-section > h3 {
+    margin: 0 0 16px;
+    color: #526448;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.related-monuments-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.related-monument-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #e8e4d9;
+    border-radius: 12px;
+    background: #fffefa;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.related-monument-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(55, 65, 45, 0.09);
+}
+
+.related-monument-card > img {
+    display: block;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.related-monument-info {
+    padding: 14px;
+}
+
+.related-monument-info h4 {
+    margin: 0 0 8px;
+    color: #394435;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.related-monument-info p {
+    margin: 0 0 12px;
+    color: #858579;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.related-monument-info a {
+    color: #687b5b;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.related-monument-info a:hover {
+    color: #394435;
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .related-monuments-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .related-monuments-list {
+        grid-template-columns: 1fr;
+    }
+
+    .related-monument-card > img {
+        height: 180px;
+    }
+}

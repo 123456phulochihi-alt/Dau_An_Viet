@@ -1,0 +1,284 @@
+
+<!doctype html>
+<html lang="vi">
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f2e9">
+  <title>Dòng thời gian | Dấu Ấn Việt</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/timeline.css">
+</head>
+<body>
+  <header class="timeline-header">
+    <a href="./edu.html" class="back-link">
+      ← Quay lại EDU
+    </a>
+
+    <div class="header-right">
+      <span id="timelineRoleBadge">EDU MEMBER</span>
+      <a href="./account.html">Tài khoản</a>
+    </div>
+  </header>
+
+  <main class="timeline-page">
+    <section class="timeline-hero">
+      <p class="eyebrow">KHÔNG GIAN HỌC TẬP</p>
+      <h1>Dòng thời gian</h1>
+      <p>
+        Khám phá những dấu mốc lịch sử, hành trình hình thành
+        và phát triển của đất nước qua từng thời kỳ.
+      </p>
+    </section>
+
+    <section class="timeline-controls">
+      <input
+        type="search"
+        id="timelineSearch"
+        placeholder="Tìm kiếm sự kiện lịch sử..."
+      >
+
+      <select id="timelinePeriodFilter">
+        <option value="">Tất cả giai đoạn</option>
+      </select>
+
+      <button id="addTimelineEventButton" hidden>
+        + Thêm sự kiện
+      </button>
+    </section>
+
+    <p id="timelineMessage"></p>
+
+<!-- ADMIN TIMELINE MANAGEMENT -->
+
+
+<section id="timelineAdminPanel" class="timeline-admin-panel" hidden>
+    <div class="timeline-admin-header">
+        <div>
+            <p class="eyebrow">QUẢN LÝ NỘI DUNG</p>
+            <h2>Quản lý dòng thời gian</h2>
+            <p>Thêm và sắp xếp các sự kiện chính cùng những sự kiện con tương ứng.</p>
+        </div>
+
+        <button type="button" id="addMainEventButton" class="primary-button">
+            + Thêm sự kiện chính
+        </button>
+    </div>
+
+    <div class="timeline-admin-content">
+        <div class="timeline-admin-section-heading">
+            <div>
+                <h3>Danh sách sự kiện</h3>
+                <p>Chọn một sự kiện chính để quản lý các sự kiện con.</p>
+            </div>
+        </div>
+
+        <div id="mainEventsAdminList" class="main-events-admin-list"></div>
+    </div>
+</section>
+
+<section id="eventEditor" class="event-editor" hidden>
+    <div class="event-editor-header">
+        <div>
+            <p class="eyebrow">BIÊN TẬP DÒNG THỜI GIAN</p>
+            <h2 id="eventEditorHeading">Thêm sự kiện</h2>
+            <p>Điền thông tin để đưa sự kiện vào dòng thời gian.</p>
+        </div>
+    </div>
+
+    <form id="eventEditorForm">
+        <input type="hidden" id="eventId">
+
+        <div class="form-group">
+            <label for="eventType">Loại sự kiện</label>
+            <select id="eventType" required>
+                <option value="main">Sự kiện chính</option>
+                <option value="child">Sự kiện con</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="parentEventGroup" hidden>
+            <label for="parentEvent">Thuộc sự kiện chính</label>
+            <select id="parentEvent">
+                <option value="">Chọn sự kiện chính</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="eventTitle">Tên sự kiện</label>
+            <input type="text" id="eventTitle" placeholder="Nhập tên sự kiện" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="eventYear">Năm diễn ra</label>
+                <input type="number" id="eventYear" placeholder="Ví dụ: 1945" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventDateLabel">Thời gian hiển thị</label>
+                <input type="text" id="eventDateLabel" placeholder="Ví dụ: Tháng 8 năm 1945">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="eventSummary">Mô tả ngắn</label>
+            <textarea id="eventSummary" rows="3" placeholder="Giới thiệu khái quát về sự kiện"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="eventContent">Nội dung chi tiết</label>
+            <textarea id="eventContent" rows="8" placeholder="Nhập nội dung chi tiết về sự kiện"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="eventImageUrl">Đường dẫn hình ảnh</label>
+            <input type="url" id="eventImageUrl" placeholder="https://...">
+        </div>
+
+        <div class="form-group">
+            <label for="eventSortOrder">Thứ tự hiển thị</label>
+            <input type="number" id="eventSortOrder" value="0">
+        </div>
+<div class="form-group monument-selector-group">
+    <label>Di tích liên quan</label>
+
+    <p class="form-description">
+        Chọn những di tích có liên quan đến sự kiện này.
+        Bạn có thể chọn nhiều di tích.
+    </p>
+
+    <div class="monument-selector">
+        <div class="monument-search-box">
+            <input
+                type="text"
+                id="monumentSearch"
+                placeholder="Tìm kiếm tên di tích..."
+            >
+        </div>
+
+        <div id="selectedMonuments" class="selected-monuments">
+            <p>Chưa chọn di tích nào.</p>
+        </div>
+
+        <div
+            id="monumentSelectionList"
+            class="monument-selection-list"
+        >
+            <p>Đang tải danh sách di tích...</p>
+        </div>
+    </div>
+
+    <p id="monumentSelectionMessage" class="form-description"></p>
+</div>
+        <div class="event-editor-actions">
+            <button type="button" id="cancelEventEditor" class="secondary-button">
+                Hủy
+            </button>
+
+            <button type="submit" class="primary-button">
+                Lưu sự kiện
+            </button>
+        </div>
+    </form>
+</section>
+
+
+<!-- TIMELINE EDITOR -->
+
+<section id="timelineEditor" class="timeline-editor" hidden>
+  <div class="timeline-editor-card">
+    <div class="timeline-editor-heading">
+      <div>
+        <p class="eyebrow">THIẾT LẬP NỘI DUNG</p>
+        <h2 id="timelineEditorTitle">Thêm dòng thời gian</h2>
+      </div>
+
+      <button id="closeTimelineEditor" type="button">×</button>
+    </div>
+
+    <form id="timelineEditorForm">
+      <input type="hidden" id="timelineId">
+
+      <label for="timelineName">Tên dòng thời gian *</label>
+      <input
+        type="text"
+        id="timelineName"
+        placeholder="Ví dụ: Lịch sử Việt Nam"
+        required
+      >
+
+      <label for="timelineParent">Thuộc dòng thời gian</label>
+      <select id="timelineParent">
+        <option value="">Timeline lớn (không có cấp cha)</option>
+      </select>
+
+      <p class="form-hint">
+        Để trống nếu tạo timeline lớn. Chọn một timeline lớn nếu muốn tạo timeline nhỏ bên trong.
+      </p>
+
+      <div class="timeline-form-row">
+        <div>
+          <label for="timelineStartYear">Năm bắt đầu</label>
+          <input
+            type="number"
+            id="timelineStartYear"
+            placeholder="Ví dụ: 938"
+          >
+        </div>
+
+        <div>
+          <label for="timelineEndYear">Năm kết thúc</label>
+          <input
+            type="number"
+            id="timelineEndYear"
+            placeholder="Ví dụ: 1858"
+          >
+        </div>
+      </div>
+
+      <label for="timelineDescription">Mô tả</label>
+      <textarea
+        id="timelineDescription"
+        rows="4"
+        placeholder="Giới thiệu về dòng thời gian..."
+      ></textarea>
+
+      <label for="timelineCoverImage">Đường dẫn ảnh bìa</label>
+      <input
+        type="url"
+        id="timelineCoverImage"
+        placeholder="https://..."
+      >
+
+      <label for="timelineSortOrder">Thứ tự hiển thị</label>
+      <input
+        type="number"
+        id="timelineSortOrder"
+        value="0"
+      >
+
+      <div class="timeline-editor-actions">
+        <button type="button" id="cancelTimelineEditor">
+          Hủy
+        </button>
+
+        <button type="submit" id="saveTimelineButton">
+          Lưu dòng thời gian
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+
+    <section id="timelineList" class="timeline-list">
+    </section>
+  </main>
+
+  <script type="module" src="/src/timeline.js"></script>
+</body>
+</html>

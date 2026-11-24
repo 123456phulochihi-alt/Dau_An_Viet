@@ -1,6 +1,7 @@
 import '../style.css';
 import { supabase, isConfigured } from './supabase.js';
 import { fallbackMonument } from './data.js';
+import { applyAppearance } from './appearance.js';
 
 const container = document.querySelector('#detailContent');
 const params = new URLSearchParams(location.search);
@@ -50,6 +51,41 @@ async function load() {
   await saveRecentlyViewed(item.id);
 }
   }
+  let isEduMember = false;
+
+  if (isConfigured) {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (user) {
+      const { data: profile, error } = await supabase
+        .from('profiles')
+        .select('role, membership_type')
+        .eq('id', user.id)
+        .maybeSingle();
+
+      isEduMember = !error && (
+  profile?.role === 'admin' ||
+  profile?.membership_type === 'edu'
+);
+    }
+  }
+  const quizCard = isEduMember
+    ? `
+      <a href="./quiz.html?id=${encodeURIComponent(item.id)}" class="detail-quiz-card">
+        <span class="eyebrow">KHÁM PHÁ VÀ ÔN TẬP</span>
+        <h2>Thử thách kiến thức về di tích</h2>
+        <p>Kiểm tra những gì bạn đã biết qua các mini game tương tác.</p>
+        <span class="card-link">Tham gia Quiz →</span>
+      </a>
+    `
+    : `
+      <div class="detail-quiz-card quiz-locked">
+        <span class="eyebrow">NỘI DUNG DÀNH RIÊNG CHO EDU</span>
+        <h2>Thử thách kiến thức về di tích</h2>
+        <p>Mở khóa các mini game ôn tập với tài khoản thành viên EDU.</p>
+        <span class="card-link">🔒 Quiz đang bị khóa</span>
+      </div>
+    `;
   const level = Number(item.heritage_level);
 
   const levelContent = [3, 4, 5, 6].includes(level)
@@ -85,7 +121,9 @@ async function load() {
         ${item.introduction ? `<p class="long-copy">${esc(item.introduction).replace(/\n/g, '<br>')}</p>` : '<div class="empty-content"><span>✦</span><b>Nội dung đang được biên soạn</b><p>Phần giới thiệu chuyên sâu sẽ được cập nhật bởi đội ngũ quản trị.</p></div>'}
       </article>
     </div>
+    ${quizCard}
     <section class="gallery-section"><div><p class="eyebrow">TƯ LIỆU HÌNH ẢNH</p><h2>Thư viện <em>hình ảnh.</em></h2></div><p class="muted">Hiện tại hồ sơ sử dụng một ảnh đại diện. Bộ sưu tập ảnh sẽ được bổ sung trong quá trình phát triển.</p></section>
   `;
 }
 load();
+applyAppearance('detail');

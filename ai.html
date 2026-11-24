@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f3efe5" />
+  <meta name="description" content="AI Heritage Assistant - Trợ lý khám phá di sản Việt Nam." />
+  <title>AI Heritage Assistant | Dấu Ấn Việt</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="aiApp">
+    <header class="site-header">
+      <a class="brand" href="./">
+        <span class="brand-mark">DS</span>
+        <span>
+          <b>DI SẢN SÀI GÒN</b>
+          <small>HỒ SƠ DI SẢN THÀNH PHỐ</small>
+        </span>
+      </a>
+      <nav>
+        <a href="./">Bản đồ di sản</a>
+        <a href="./edu.html">EDU</a>
+        <a href="./account.html">Tài khoản</a>
+      </nav>
+    </header>
+
+    <main class="ai-shell">
+      <section class="ai-intro">
+        <p class="eyebrow">DẤU ẤN VIỆT / TRỢ LÝ AI</p>
+        <h1>AI Heritage <em>Assistant.</em></h1>
+        <p>Người đồng hành cùng bạn tìm hiểu lịch sử, kiến trúc và những câu chuyện phía sau mỗi di sản Việt Nam.</p>
+      </section>
+
+      <section class="ai-workspace" aria-label="Trò chuyện với trợ lý AI">
+        <aside class="ai-sidebar">
+          <button id="newChatButton" class="ai-new-chat" type="button">＋ Cuộc trò chuyện mới</button>
+          <div class="ai-sidebar-label">KHÁM PHÁ CÙNG AI</div>
+          <button class="ai-prompt-suggestion" type="button" data-prompt="Hãy giới thiệu cho tôi về một di tích lịch sử tiêu biểu ở Việt Nam.">Tìm hiểu một di tích</button>
+          <button class="ai-prompt-suggestion" type="button" data-prompt="Hãy giải thích một kiến thức lịch sử khó hiểu bằng ngôn ngữ đơn giản.">Giải thích kiến thức</button>
+          <button class="ai-prompt-suggestion" type="button" data-prompt="Tạo 5 câu hỏi trắc nghiệm để tôi ôn tập về lịch sử Việt Nam.">Tạo câu hỏi ôn tập</button>
+          <button class="ai-prompt-suggestion" type="button" data-prompt="Gợi ý một kế hoạch tìm hiểu di sản trong một buổi.">Lập kế hoạch khám phá</button>
+          <p class="ai-sidebar-note">Câu trả lời do AI tạo có thể chưa hoàn toàn chính xác. Hãy đối chiếu với nguồn tư liệu đáng tin cậy.</p>
+        </aside>
+
+        <section class="ai-chat-panel">
+          <div id="aiMessages" class="ai-messages" aria-live="polite">
+            <div class="ai-welcome">
+              <span class="ai-avatar">AI</span>
+              <p class="eyebrow">XIN CHÀO, NHÀ KHÁM PHÁ!</p>
+              <h2>Hôm nay bạn muốn tìm hiểu điều gì?</h2>
+              <p>Từ một công trình kiến trúc đến một dấu mốc lịch sử, hãy bắt đầu bằng câu hỏi của bạn.</p>
+            </div>
+          </div>
+
+          <form id="aiChatForm" class="ai-composer">
+            <label class="visually-hidden" for="aiMessageInput">Nhập câu hỏi</label>
+            <textarea id="aiMessageInput" rows="1" maxlength="4000" placeholder="Đặt câu hỏi về lịch sử, địa lý, di tích..." required></textarea>
+            <button id="aiSendButton" type="submit" aria-label="Gửi câu hỏi">Gửi</button>
+          </form>
+          <p class="ai-chat-disclaimer">AI có thể mắc lỗi. Không chia sẻ thông tin cá nhân hoặc bí mật.</p>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <span>DI SẢN SÀI GÒN</span>
+      <span>Học hỏi và khám phá di sản Việt Nam.</span>
+      <span>PHIÊN BẢN 01 / 2026</span>
+    </footer>
+  </div>
+
+  <script type="module" src="/src/ai.js"></script>
+</body>
+</html>

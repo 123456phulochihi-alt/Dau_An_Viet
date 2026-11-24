@@ -4,7 +4,7 @@ import '../style.css';
 import L from 'leaflet';
 import { supabase, isConfigured } from './supabase.js';
 import { fallbackMonument } from './data.js';
-import { saveSearch } from './account.js';
+import { applyAppearance } from './appearance.js';
 
 const vietnamBounds = L.latLngBounds(
   L.latLng(7.5, 102.0),
@@ -33,64 +33,9 @@ const markerIcon = L.divIcon({
 });
 
 let monuments = [fallbackMonument];
+let tags = [];
 let activeTags = new Set();
 
-function renderTags() {
-  const allTags = [...new Set(monuments.flatMap(item => item.tags || []))];
-  document.querySelector('#tagFilters').innerHTML = allTags.map(tag =>
-    `<button class="tag-chip ${activeTags.has(tag) ? 'selected' : ''}" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</button>`
-  ).join('');
-  document.querySelectorAll('[data-tag]').forEach(button => button.addEventListener('click', () => {
-    const tag = button.dataset.tag;
-    activeTags.has(tag) ? activeTags.delete(tag) : activeTags.add(tag);
-    renderTags();
-    renderPlaces();
-  }));
-}
-
-function renderPlaces() {
-  const query = document.querySelector('#searchInput').value.trim().toLocaleLowerCase('vi');
-  const selectedLevel = document.querySelector('#heritageFilter').value;
-
-  const filtered = monuments.filter(item => {
-    const matchesText = item.name.toLocaleLowerCase('vi').includes(query);
-const matchesTags = activeTags.size === 0 || [...activeTags].every(tag => (item.tags || []).includes(tag));
-
-const matchesLevel = !selectedLevel
-  || (selectedLevel === 'unrated'
-    ? ![3, 4, 5, 6].includes(Number(item.heritage_level))
-    : Number(item.heritage_level) === Number(selectedLevel));
-
-return matchesText && matchesTags && matchesLevel;
-  });
-
-  document.querySelector('#placeCount').textContent = `${String(filtered.length).padStart(2, '0')} ĐỊA DANH`;
-
-  document.querySelector('#placeList').innerHTML = filtered.map(item => {
-    const level = Number(item.heritage_level);
-
-    const levelContent = [3, 4, 5, 6].includes(level)
-      ? `
-        <span class="flag-rating" title="${level} cờ Việt Nam">
-          ${Array.from({ length: level }, () => '<span class="vietnam-flag"></span>').join('')}
-        </span>
-        ${level === 6 ? '<span class="unesco-divider"></span><span class="unesco-label">UNESCO</span>' : ''}
-      `
-      : '<span class="unrated-label">UNRATED</span>';
-
-    return `
-      <a class="place-card" href="./detail.html?id=${encodeURIComponent(item.id)}">
-        <div class="place-index">01 <span>·</span> DI TÍCH</div>
-        <h3>${escapeHtml(item.name)}</h3>
-        <p>${escapeHtml(item.address || '')}</p>
-        <div class="place-rating">${levelContent}</div>
-        <div class="place-tags">${(item.tags || []).slice(0, 3).map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}</div>
-        <div class="place-open">MỞ HỒ SƠ <b>↗</b></div>
-      </a>`;
-  }).join('') || '<p class="empty-state">Không tìm thấy địa danh phù hợp.</p>';
-
-  window.dispatchEvent(new CustomEvent('heritage:filtered', { detail: filtered }));
-}
 
 function addMarkers() {
   monuments.forEach(item => {
@@ -122,6 +67,148 @@ function addMarkers() {
 
 function escapeHtml(value = '') {
   return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+}
+
+
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const earthRadius = 6371;
+  const toRadians = value => value * Math.PI / 180;
+
+  const latitudeDifference = toRadians(lat2 - lat1);
+  const longitudeDifference = toRadians(lon2 - lon1);
+
+  const a = Math.sin(latitudeDifference / 2) ** 2
+    + Math.cos(toRadians(lat1))
+    * Math.cos(toRadians(lat2))
+    * Math.sin(longitudeDifference / 2) ** 2;
+
+  return earthRadius * 2 * Math.atan2(
+    Math.sqrt(a),
+    Math.sqrt(1 - a)
+  );
+}
+
+function formatDistance(distance) {
+  if (distance < 1) {
+    return `${Math.round(distance * 1000)} m`;
+  }
+
+  return `${distance.toFixed(1)} km`;
+}
+
+function findNearbyMonuments(latitude, longitude) {
+  return monuments
+    .filter(item => {
+      const lat = Number(item.latitude);
+      const lon = Number(item.longitude);
+
+      return item.latitude !== null
+        && item.latitude !== undefined
+        && item.longitude !== null
+        && item.longitude !== undefined
+        && Number.isFinite(lat)
+        && Number.isFinite(lon)
+        && lat >= -90 && lat <= 90
+        && lon >= -180 && lon <= 180;
+    })
+    .map(item => ({
+      ...item,
+      distance: calculateDistance(
+        latitude,
+        longitude,
+        Number(item.latitude),
+        Number(item.longitude)
+      )
+    }))
+    .sort((a, b) => a.distance - b.distance);
+}
+
+function renderNearbyMonuments(latitude, longitude) {
+  const nearbyList = document.querySelector('#nearbyList');
+  const nearbyStatus = document.querySelector('#nearbyStatus');
+
+  const sortedMonuments = findNearbyMonuments(latitude, longitude);
+
+  if (!sortedMonuments.length) {
+    nearbyStatus.textContent = 'Chưa có di tích nào được cập nhật tọa độ.';
+    nearbyList.innerHTML = '';
+    return;
+  }
+
+  const nearby = sortedMonuments.filter(item => item.distance <= 10);
+  const results = (nearby.length ? nearby : sortedMonuments).slice(0, 3);
+
+  if (nearby.length) {
+    nearbyStatus.textContent = `Tìm thấy ${nearby.length} di tích trong bán kính 10 km.`;
+  } else {
+    nearbyStatus.textContent = 'Không có di tích trong bán kính 10 km. Đây là 3 di tích gần bạn nhất.';
+  }
+
+  nearbyList.innerHTML = results.map((item, index) => {
+    const distance = formatDistance(item.distance);
+
+    const directionUrl = `https://www.google.com/maps/dir/?api=1&origin=${latitude},${longitude}&destination=${item.latitude},${item.longitude}&travelmode=driving`;
+
+    return `
+      <div class="nearby-card">
+        <div class="nearby-distance">
+          ${index === 0 ? 'GẦN BẠN NHẤT' : `VỊ TRÍ THỨ ${index + 1}`}
+          · CÁCH ${distance}
+        </div>
+        <h3>${escapeHtml(item.name)}</h3>
+        <p>${escapeHtml(item.address || '')}</p>
+        <div class="nearby-actions">
+          <a href="./detail.html?id=${encodeURIComponent(item.id)}">XEM HỒ SƠ ↗</a>
+          <a href="${directionUrl}" target="_blank" rel="noopener noreferrer">DẪN ĐƯỜNG ↗</a>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function locateNearbyMonuments() {
+  const nearbyButton = document.querySelector('#nearbyButton');
+  const nearbyStatus = document.querySelector('#nearbyStatus');
+  const nearbyList = document.querySelector('#nearbyList');
+
+  if (!navigator.geolocation) {
+    nearbyStatus.textContent = 'Trình duyệt không hỗ trợ định vị.';
+    return;
+  }
+
+  nearbyButton.disabled = true;
+  nearbyButton.textContent = 'ĐANG XÁC ĐỊNH VỊ TRÍ...';
+  nearbyStatus.textContent = 'Vui lòng cho phép trình duyệt truy cập vị trí của bạn.';
+
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      renderNearbyMonuments(latitude, longitude);
+
+      nearbyButton.disabled = false;
+      nearbyButton.innerHTML = '<span>⌖</span> Tìm lại di tích gần tôi';
+    },
+    error => {
+      if (error.code === 1) {
+        nearbyStatus.textContent = 'Bạn chưa cấp quyền định vị. Hãy cho phép truy cập vị trí trong trình duyệt.';
+      } else if (error.code === 2) {
+        nearbyStatus.textContent = 'Không xác định được vị trí. Hãy kiểm tra GPS hoặc kết nối mạng.';
+      } else {
+        nearbyStatus.textContent = 'Định vị mất quá nhiều thời gian. Vui lòng thử lại.';
+      }
+
+      nearbyList.innerHTML = '';
+      nearbyButton.disabled = false;
+      nearbyButton.innerHTML = '<span>⌖</span> Thử định vị lại';
+    },
+    {
+      enableHighAccuracy: false,
+      timeout: 15000,
+      maximumAge: 60000
+    }
+  );
 }
 
 
@@ -160,30 +247,20 @@ async function loadMonuments() {
   }
 
   addMarkers();
-  renderTags();
-  renderPlaces();
 
-    addMarkers();
-  renderTags();
-  renderPlaces();
 
   map.fitBounds(vietnamBounds, {
     padding: [10, 10]
   });
 }
-const searchInput = document.querySelector('#searchInput');
-
-searchInput.addEventListener('input', renderPlaces);
-
-searchInput.addEventListener('keydown', async e => {
-  if (e.key === 'Enter') {
-    await saveSearch(searchInput.value);
-  }
-});
 async function updateAccountLink()
 {
   const accountLink = document.querySelector('#accountLink');
-  if (!accountLink) return;
+  const eduLink = document.querySelector('#eduLink');
+
+  if (!accountLink || !eduLink) return;
+
+  eduLink.hidden = true;
 
   try
   {
@@ -191,16 +268,23 @@ async function updateAccountLink()
 
     if (user)
     {
-      const { data: profile } = await supabase
+      const { data: profile, error } = await supabase
         .from('profiles')
-        .select('username, display_name')
+        .select('username, display_name, role, membership_type')
         .eq('id', user.id)
         .single();
 
-      const name = profile?.username || profile?.display_name || user.email;
+      if (error) throw error;
+
+      const name = profile.username || profile.display_name || user.email;
 
       accountLink.textContent = `Xin chào, ${name}!`;
       accountLink.href = './account.html';
+
+      if (profile.role === 'admin' || profile.membership_type === 'edu')
+      {
+        eduLink.hidden = false;
+      }
     }
   }
   catch (error)
@@ -208,8 +292,15 @@ async function updateAccountLink()
     console.error('Không thể tải thông tin tài khoản:', error);
   }
 }
-document.querySelector('#searchInput').addEventListener('input', renderPlaces);
-document.querySelector('#heritageFilter').addEventListener('change', renderPlaces);
+
+
+document.querySelector('#nearbyButton')
+  .addEventListener('click', locateNearbyMonuments);
 
 loadMonuments();
 updateAccountLink();
+applyAppearance('home').then(() => {
+  requestAnimationFrame(() => {
+    map.invalidateSize(true);
+  });
+});
